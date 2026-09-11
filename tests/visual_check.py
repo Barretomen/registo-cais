@@ -16,6 +16,7 @@ def seed(context):
         localStorage.setItem('registo_cais_guard_number_v1', '24317');
         localStorage.setItem('registo_cais_theme_v1', 'light');
         localStorage.setItem('registo_cais_module_v1', 'estafetas');
+        window.__DISABLE_CLOUD__ = true;
         """
     )
 

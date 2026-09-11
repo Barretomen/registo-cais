@@ -32,12 +32,13 @@
   function invalid(el,msg){toast(msg);el.focus();el.style.borderColor='var(--red)';setTimeout(()=>el.style.borderColor='',900)}
 
   function recordActions(r,insideOnly){
-    const exit=r.status==='inside'?`<button class="mini-btn exit-btn" data-exit="${esc(r.id)}" type="button">Saiu</button>`:'';
-    if(state.module!=='pessoas')return insideOnly?exit:`<button class="mini-btn repeat-btn" data-repeat="${esc(r.id)}" type="button">↻ Repetir</button><button class="mini-btn edit-btn" data-edit="${esc(r.id)}" type="button">Editar</button>${exit}`;
+    const privileged=!state.cloudEnabled||['centralist','admin'].includes(state.userRole),own=!state.cloudEnabled||!r.createdBy||r.createdBy===state.currentUserId,canChange=privileged||own,canRegister=!state.cloudEnabled||state.userRole!=='centralist';
+    const exit=r.status==='inside'&&canChange?`<button class="mini-btn exit-btn" data-exit="${esc(r.id)}" type="button">Saiu</button>`:'';
+    if(state.module!=='pessoas')return insideOnly?exit:`${canRegister?`<button class="mini-btn repeat-btn" data-repeat="${esc(r.id)}" type="button">↻ Repetir</button>`:''}${canChange&&canRegister?`<button class="mini-btn edit-btn" data-edit="${esc(r.id)}" type="button">Editar</button>`:''}${exit}`;
     let auth='';
-    if(r.authorization==='pending')auth=`<button class="mini-btn auth-btn authorize" data-authorize="${esc(r.id)}" type="button">✓ Central autorizou</button><button class="mini-btn auth-btn deny" data-deny="${esc(r.id)}" type="button">Não autorizado</button>`;
-    else if(r.authorization==='denied'&&r.status==='inside')auth=`<button class="mini-btn auth-btn change-auth" data-authorize="${esc(r.id)}" type="button">Alterar para autorizado</button>`;
-    return insideOnly?`${auth}${exit}`:`<button class="mini-btn repeat-btn" data-repeat="${esc(r.id)}" type="button">↻ Repetir</button><button class="mini-btn edit-btn" data-edit="${esc(r.id)}" type="button">Editar</button>${auth}${exit}`;
+    if(privileged&&r.authorization==='pending')auth=`<button class="mini-btn auth-btn authorize" data-authorize="${esc(r.id)}" type="button">✓ Central autorizou</button><button class="mini-btn auth-btn deny" data-deny="${esc(r.id)}" type="button">Não autorizado</button>`;
+    else if(privileged&&r.authorization==='denied'&&r.status==='inside')auth=`<button class="mini-btn auth-btn change-auth" data-authorize="${esc(r.id)}" type="button">Alterar para autorizado</button>`;
+    return insideOnly?`${auth}${exit}`:`${canRegister?`<button class="mini-btn repeat-btn" data-repeat="${esc(r.id)}" type="button">↻ Repetir</button>`:''}${canChange&&canRegister?`<button class="mini-btn edit-btn" data-edit="${esc(r.id)}" type="button">Editar</button>`:''}${auth}${exit}`;
   }
   function recordCard(r,insideOnly=false){
     const exitText=r.status==='left'?`${formatShortDate(r.exitDate)} · ${esc(r.exitTime)}`:'—',guardText=[r.guardName,r.guardNumber?`Vigilante nº ${r.guardNumber}`:''].filter(Boolean).join(' · ')||'Vigilante —';

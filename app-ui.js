@@ -53,7 +53,8 @@
   $('closeEdit').onclick=closeEdit;$('cancelEdit').onclick=closeEdit;$('deleteEdit').onclick=deleteEdit;$('saveEdit').onclick=saveEdit;
   $('closeVehicleEdit').onclick=closeVehicleEdit;$('cancelVehicleEdit').onclick=closeVehicleEdit;$('deleteVehicleEdit').onclick=deleteVehicleEdit;$('saveVehicleEdit').onclick=saveVehicleEdit;
   $('closePersonEdit').onclick=closePersonEdit;$('cancelPersonEdit').onclick=closePersonEdit;$('deletePersonEdit').onclick=deletePersonEdit;$('savePersonEdit').onclick=savePersonEdit;
-  $('guardBadge').onclick=()=>openGuardSetup(true);$('saveGuardNumber').onclick=saveGuardFromModal;$('cancelGuardSetup').onclick=closeGuardSetup;$('themeToggle').onclick=()=>applyTheme(state.theme==='dark'?'light':'dark');
+  $('guardBadge').onclick=()=>{if(!state.cloudEnabled||!['centralist','admin'].includes(state.userRole))openGuardSetup(true)};$('saveGuardNumber').onclick=saveGuardFromModal;$('cancelGuardSetup').onclick=closeGuardSetup;$('themeToggle').onclick=()=>applyTheme(state.theme==='dark'?'light':'dark');
+  $('authForm').onsubmit=e=>{e.preventDefault();if(window.cloudApp)window.cloudApp.signIn()};$('logoutBtn').onclick=()=>window.cloudApp&&window.cloudApp.signOut();
   $('editOverlay').onclick=e=>{if(e.target===$('editOverlay'))closeEdit()};$('vehicleEditOverlay').onclick=e=>{if(e.target===$('vehicleEditOverlay'))closeVehicleEdit()};$('personEditOverlay').onclick=e=>{if(e.target===$('personEditOverlay'))closePersonEdit()};$('guardOverlay').onclick=e=>{if(e.target===$('guardOverlay'))closeGuardSetup()};
 
-  applyTheme(state.theme);updateClock();setInterval(updateClock,1000);switchModule(state.module);if(!state.guardName||!state.guardNumber)setTimeout(()=>openGuardSetup(false),250);
+  applyTheme(state.theme);updateClock();setInterval(updateClock,1000);switchModule(state.module);if(state.cloudEnabled&&window.cloudApp)window.cloudApp.init();else if(!state.guardName||!state.guardNumber)setTimeout(()=>openGuardSetup(false),250);

@@ -178,6 +178,8 @@ h1 {
 
 .badge.local { color: #dce8e6; border-color: rgba(255, 255, 255, .22); }
 .badge.local i { display: inline-block; width: 7px; height: 7px; margin-right: 5px; background: #55c98e; border-radius: 50%; }
+.badge.sync-pending i { background: var(--signal); }
+.badge.sync-offline i { background: #e16a6a; }
 .badge.guard,
 .theme-toggle { cursor: pointer; }
 .badge.guard:hover,
@@ -508,6 +510,14 @@ select:focus { border-color: var(--action); box-shadow: inset 4px 0 0 var(--acti
 .modal-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 18px; }
 .setup-modal .primary-btn { margin-top: 18px; }
 .setup-modal .secondary-btn { margin-top: 8px; }
+.auth-overlay { z-index: 120; background: rgba(5, 21, 25, .94); }
+.auth-modal { width: min(460px, 100%); }
+.auth-modal form { margin-top: 24px; }
+.auth-modal .primary-btn { margin-top: 8px; }
+.auth-message { min-height: 22px; margin: 10px 0 0; color: var(--danger); font-size: 12px; line-height: 1.4; }
+.logout-btn { cursor: pointer; }
+body[data-cloud-role="centralist"] .danger-btn,
+body[data-cloud-role="centralist"] .form-card { display: none !important; }
 
 .toast { position: fixed; bottom: calc(22px + env(safe-area-inset-bottom)); left: 50%; z-index: 100; max-width: calc(100% - 32px); padding: 12px 16px; color: #fff; font-size: 13px; font-weight: 650; pointer-events: none; background: var(--ink); border: 1px solid rgba(255,255,255,.2); border-left: 5px solid var(--signal); border-radius: 0; box-shadow: 0 14px 40px rgba(0,0,0,.25); opacity: 0; transform: translate(-50%, 20px); transition: opacity .18s ease, transform .18s ease; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
@@ -533,6 +543,8 @@ select:focus { border-color: var(--action); box-shadow: inset 4px 0 0 var(--acti
   #registerTab .section-head { grid-area: heading; }
   #registerTab #recordsList { grid-area: records; grid-template-columns: 1fr; }
   #registerTab #emptyRecords { grid-area: empty; }
+  body[data-cloud-role="centralist"] #registerTab.active { display: block; }
+  body[data-cloud-role="centralist"] #recordsList { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 820px) {

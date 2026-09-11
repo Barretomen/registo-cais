@@ -8,6 +8,7 @@
   const GUARD_NAME_KEY='registo_cais_guard_name_v1';
   const THEME_KEY='registo_cais_theme_v1';
   const MODULE_KEY='registo_cais_module_v1';
+  const CLOUD_ENABLED=Boolean(window.CLOUD_CONFIG&&window.CLOUD_CONFIG.enabled);
 
   const $=id=>document.getElementById(id);
   const getLocal=k=>{try{return localStorage.getItem(k)||''}catch(_){return ''}};
@@ -43,10 +44,11 @@
     courierRecords:loadCourierRecords(),vehicleRecords:loadVehicleRecords(),personRecords:loadPersonRecords(),
     selectedPlatform:'',reportDate:todayISO(),editingId:null,vehicleEditingId:null,personEditingId:null,
     guardNumber:getLocal(GUARD_KEY),guardName:getLocal(GUARD_NAME_KEY),theme:getLocal(THEME_KEY)||'light',
-    module:['viaturas','pessoas'].includes(storedModule)?storedModule:'estafetas'
+    module:['viaturas','pessoas'].includes(storedModule)?storedModule:'estafetas',
+    cloudEnabled:CLOUD_ENABLED,cloudReady:false,currentUserId:'',userRole:'',siteId:'',profileName:'',syncing:false
   };
 
-  function saveRecords(){setLocal(COURIER_KEY,JSON.stringify(state.courierRecords));setLocal(VEHICLE_KEY,JSON.stringify(state.vehicleRecords));setLocal(PERSON_KEY,JSON.stringify(state.personRecords))}
+  function saveRecords(){setLocal(COURIER_KEY,JSON.stringify(state.courierRecords));setLocal(VEHICLE_KEY,JSON.stringify(state.vehicleRecords));setLocal(PERSON_KEY,JSON.stringify(state.personRecords));if(state.cloudEnabled&&window.cloudApp)window.cloudApp.scheduleSync()}
   function currentRecords(){return state.module==='viaturas'?state.vehicleRecords:(state.module==='pessoas'?state.personRecords:state.courierRecords)}
   function recordsFor(date){return currentRecords().filter(r=>r.entryDate===date).sort((a,b)=>a.entryTime.localeCompare(b.entryTime))}
   function insideRecords(){return currentRecords().filter(r=>r.status==='inside').sort((a,b)=>b.createdAt-a.createdAt)}
@@ -58,7 +60,7 @@
   const authClass=r=>r.authorization==='authorized'?'authorized':(r.authorization==='denied'?'denied':'pending');
 
   function applyTheme(theme){state.theme=theme==='dark'?'dark':'light';document.documentElement.dataset.theme=state.theme;setLocal(THEME_KEY,state.theme);$('themeToggle').textContent=state.theme==='dark'?'Modo claro':'Modo escuro';const meta=document.querySelector('meta[name=theme-color]');if(meta)meta.setAttribute('content',state.theme==='dark'?'#07171c':'#102a32')}
-  function renderGuard(){const identity=state.guardName?`${state.guardName} · nº ${state.guardNumber||'—'}`:`Vigilante nº ${state.guardNumber||'—'}`;$('guardBadge').textContent=identity;$('reportGuardLabel').textContent=identity}
+  function renderGuard(){const central=state.cloudEnabled&&['centralist','admin'].includes(state.userRole),identity=central?(state.profileName||'Central'):(state.guardName?`${state.guardName} · nº ${state.guardNumber||'—'}`:`Vigilante nº ${state.guardNumber||'—'}`);$('guardBadge').textContent=identity;$('reportGuardLabel').textContent=identity}
   function updateClock(){const d=new Date(),stamp=`${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} · ${pad(d.getHours())}:${pad(d.getMinutes())}`;$('liveTime').textContent=`${pad(d.getHours())}:${pad(d.getMinutes())}`;$('liveDateLong').textContent=new Intl.DateTimeFormat('pt-PT',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(d);$('buttonDateTime').textContent=stamp;$('vehicleButtonDateTime').textContent=stamp;$('personButtonDateTime').textContent=stamp}
 
   function moduleInfo(){
@@ -69,7 +71,8 @@
   function switchModule(module){
     state.module=['viaturas','pessoas'].includes(module)?module:'estafetas';setLocal(MODULE_KEY,state.module);
     document.querySelectorAll('.module-btn').forEach(b=>b.classList.toggle('active',b.dataset.module===state.module));
-    $('courierForm').classList.toggle('hidden',state.module!=='estafetas');$('vehicleForm').classList.toggle('hidden',state.module!=='viaturas');$('personForm').classList.toggle('hidden',state.module!=='pessoas');
+    const monitorOnly=state.cloudEnabled&&state.userRole==='centralist';$('courierForm').classList.toggle('hidden',state.module!=='estafetas'||monitorOnly);$('vehicleForm').classList.toggle('hidden',state.module!=='viaturas'||monitorOnly);$('personForm').classList.toggle('hidden',state.module!=='pessoas'||monitorOnly);
+    const registerTabButton=document.querySelector('.tab[data-tab="register"]');if(registerTabButton)registerTabButton.childNodes[0].textContent=monitorOnly?'Monitor ':'Registar ';
     const i=moduleInfo();$('moduleTitle').textContent=i.title;$('todayCountLabel').textContent=i.count;$('movementsTitle').textContent=i.movements;$('insideTitle').textContent=i.inside;$('insideHelp').textContent=i.insideHelp;$('searchInput').placeholder=i.search;$('emptyTitle').textContent=i.empty;$('emptyText').textContent=i.emptyText;$('reportKind').textContent=i.report;
     selectTab('register');renderAll();
   }
