@@ -5,8 +5,8 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#eaf2fb",
-  "theme_color": "#c9d9ed",
+  "background_color": "#f7f8f5",
+  "theme_color": "#102a32",
   "lang": "pt-PT",
   "icons": [
     {"src":"logo_strong_charon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}

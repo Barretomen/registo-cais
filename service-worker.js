@@ -1,6 +1,6 @@
-const CACHE='registo-cais-pc-v7-web-20260911';
+const CACHE='registo-cais-pc-v8-web-20260911';
 const ASSETS=[
-  './','./index.html','./styles-core.css','./styles-extra.css','./app-core.js','./app-records.js','./app-ui.js','./desktop_bridge.js',
+  './','./index.html','./styles-core.css','./styles-extra.css','./styles-redesign.css','./app-core.js','./app-records.js','./app-ui.js','./desktop_bridge.js',
   './logo_strong_charon.svg','./logo_glovo.svg','./logo_uber_eats.svg','./logo_bolt_food.svg','./manifest.webmanifest'
 ];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));

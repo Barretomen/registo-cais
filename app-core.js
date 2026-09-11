@@ -57,7 +57,7 @@
   const authLabel=r=>r.authorization==='authorized'?'Autorizado':(r.authorization==='denied'?'Não autorizado':'Aguarda autorização');
   const authClass=r=>r.authorization==='authorized'?'authorized':(r.authorization==='denied'?'denied':'pending');
 
-  function applyTheme(theme){state.theme=theme==='dark'?'dark':'light';document.documentElement.dataset.theme=state.theme;setLocal(THEME_KEY,state.theme);$('themeToggle').textContent=state.theme==='dark'?'☀️ Modo claro':'🌙 Modo escuro';const meta=document.querySelector('meta[name=theme-color]');if(meta)meta.setAttribute('content',state.theme==='dark'?'#07111D':'#C9D9ED')}
+  function applyTheme(theme){state.theme=theme==='dark'?'dark':'light';document.documentElement.dataset.theme=state.theme;setLocal(THEME_KEY,state.theme);$('themeToggle').textContent=state.theme==='dark'?'Modo claro':'Modo escuro';const meta=document.querySelector('meta[name=theme-color]');if(meta)meta.setAttribute('content',state.theme==='dark'?'#07171c':'#102a32')}
   function renderGuard(){const identity=state.guardName?`${state.guardName} · nº ${state.guardNumber||'—'}`:`Vigilante nº ${state.guardNumber||'—'}`;$('guardBadge').textContent=identity;$('reportGuardLabel').textContent=identity}
   function updateClock(){const d=new Date(),stamp=`${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} · ${pad(d.getHours())}:${pad(d.getMinutes())}`;$('liveTime').textContent=`${pad(d.getHours())}:${pad(d.getMinutes())}`;$('liveDateLong').textContent=new Intl.DateTimeFormat('pt-PT',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(d);$('buttonDateTime').textContent=stamp;$('vehicleButtonDateTime').textContent=stamp;$('personButtonDateTime').textContent=stamp}
 

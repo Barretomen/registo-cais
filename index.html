@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#C9D9ED">
+  <meta name="theme-color" content="#102A32">
   <meta name="application-name" content="Registo Cais">
   <meta name="description" content="Controlo de acessos do Cais — Estafetas, Viaturas e Pessoas.">
   <link rel="manifest" href="manifest.webmanifest">
@@ -11,25 +11,26 @@
   <script>try{document.documentElement.dataset.theme=localStorage.getItem('registo_cais_theme_v1')||'light'}catch(e){}</script>
   <link rel="stylesheet" href="styles-core.css">
   <link rel="stylesheet" href="styles-extra.css">
+  <link rel="stylesheet" href="styles-redesign.css">
 </head>
 <body>
   <div class="app-shell">
     <header class="brand-header">
       <img class="brand-logo" src="logo_strong_charon.svg" alt="Strong Charon">
-      <div class="eyebrow">CONTROLO DE ACESSOS · CAIS</div>
+      <div class="eyebrow">Posto de controlo do cais</div>
       <h1 id="moduleTitle">Registo de Estafetas</h1>
       <div class="date-block"><strong id="liveDateLong">—</strong><span id="liveTime">--:--</span></div>
       <div class="header-badges">
-        <span class="badge local">● Dados guardados localmente</span>
+        <span class="badge local"><i aria-hidden="true"></i> Operação local</span>
         <button id="guardBadge" class="badge guard" type="button">Vigilante — · nº —</button>
-        <button id="themeToggle" class="badge theme-toggle" type="button">🌙 Modo escuro</button>
+        <button id="themeToggle" class="badge theme-toggle" type="button">Modo escuro</button>
       </div>
     </header>
 
     <div class="module-switcher" aria-label="Tipo de registo">
-      <button class="module-btn active" data-module="estafetas" type="button"><span>🛵</span><b>Estafetas</b></button>
-      <button class="module-btn" data-module="viaturas" type="button"><span>🚚</span><b>Viaturas</b></button>
-      <button class="module-btn" data-module="pessoas" type="button"><span>👷</span><b>Pessoas</b></button>
+      <button class="module-btn active" data-module="estafetas" type="button"><span aria-hidden="true">E</span><b>Estafetas</b></button>
+      <button class="module-btn" data-module="viaturas" type="button"><span aria-hidden="true">V</span><b>Viaturas</b></button>
+      <button class="module-btn" data-module="pessoas" type="button"><span aria-hidden="true">P</span><b>Pessoas</b></button>
     </div>
 
     <nav class="tabs" aria-label="Navegação principal">
@@ -47,12 +48,12 @@
         </div>
 
         <section id="courierForm" class="card form-card">
-          <div class="card-title center"><span class="kicker">NOVO ACESSO</span><h2>Registar estafeta</h2><p>A data e a hora são gravadas automaticamente.</p></div>
+          <div class="card-title center"><span class="kicker">Nova entrada</span><h2>Registar estafeta</h2><p>A hora fica associada ao movimento automaticamente.</p></div>
           <label for="courierName">Nome do estafeta</label>
-          <div class="input-row"><input id="courierName" autocomplete="off" placeholder="Ex.: Carlos Silva" maxlength="80"><button class="icon-btn" id="voiceName" type="button">🎤</button></div>
+          <div class="input-row"><input id="courierName" autocomplete="off" placeholder="Ex.: Carlos Silva" maxlength="80"><button class="icon-btn" id="voiceName" type="button" aria-label="Ditar nome">Ditar</button></div>
           <div id="nameSuggestions" class="suggestions hidden"></div><div id="recentNames" class="chips compact"></div>
           <label for="destination">Loja / destino</label>
-          <div class="input-row"><input id="destination" autocomplete="off" placeholder="Ex.: Burger King — Piso 3" maxlength="100"><button class="icon-btn" id="voiceDestination" type="button">🎤</button></div>
+          <div class="input-row"><input id="destination" autocomplete="off" placeholder="Ex.: Burger King — Piso 3" maxlength="100"><button class="icon-btn" id="voiceDestination" type="button" aria-label="Ditar destino">Ditar</button></div>
           <div class="chips floor-chips"><button class="chip quick-dest" data-target="destination" data-value="Piso 3" type="button">Piso 3</button><button class="chip quick-dest" data-target="destination" data-value="Piso 2" type="button">Piso 2</button><button class="chip quick-dest" data-target="destination" data-value="Piso 1" type="button">Piso 1</button><button class="chip quick-dest" data-target="destination" data-value="Piso 0" type="button">Piso 0</button></div>
           <div id="recentDestinations" class="chips compact"></div>
           <label>Plataforma</label>
@@ -64,47 +65,47 @@
           </div>
           <input id="otherPlatform" class="hidden other-platform" autocomplete="off" placeholder="Nome da plataforma" maxlength="50">
           <button id="registerBtn" class="primary-btn register-btn" type="button"><span>Registar entrada</span><strong id="buttonDateTime">--/--/---- · --:--</strong></button>
-          <p class="privacy-note">🔒 Funciona sem internet. Os registos ficam guardados neste dispositivo até serem exportados.</p>
+          <p class="privacy-note">Funciona sem internet. Os registos permanecem neste dispositivo até serem exportados.</p>
         </section>
 
         <section id="vehicleForm" class="card form-card hidden">
-          <div class="card-title center"><span class="kicker">NOVA VIATURA</span><h2>Registar entrada</h2><p>Matrícula, data e hora ficam associados ao movimento.</p></div>
+          <div class="card-title center"><span class="kicker">Nova viatura</span><h2>Registar entrada</h2><p>Matrícula, data e hora ficam associados ao movimento.</p></div>
           <label for="vehiclePlate">Matrícula do veículo</label>
           <input id="vehiclePlate" class="plate-input" autocomplete="off" placeholder="Ex.: AA-12-BB" maxlength="16" autocapitalize="characters">
           <div id="vehicleSuggestions" class="suggestions hidden"></div><div id="recentVehicles" class="chips compact"></div>
           <label for="vehiclePersons">Nome da pessoa / pessoas</label>
-          <div class="input-row"><input id="vehiclePersons" autocomplete="off" placeholder="Ex.: Bruno Oliveira" maxlength="140"><button class="icon-btn" id="voiceVehiclePersons" type="button">🎤</button></div>
+          <div class="input-row"><input id="vehiclePersons" autocomplete="off" placeholder="Ex.: Bruno Oliveira" maxlength="140"><button class="icon-btn" id="voiceVehiclePersons" type="button" aria-label="Ditar nome">Ditar</button></div>
           <label for="vehicleCompany">Empresa que representa / trabalha</label>
-          <div class="input-row"><input id="vehicleCompany" autocomplete="off" placeholder="Ex.: DHL" maxlength="100"><button class="icon-btn" id="voiceVehicleCompany" type="button">🎤</button></div>
+          <div class="input-row"><input id="vehicleCompany" autocomplete="off" placeholder="Ex.: DHL" maxlength="100"><button class="icon-btn" id="voiceVehicleCompany" type="button" aria-label="Ditar empresa">Ditar</button></div>
           <label for="vehicleDestination">Loja / estabelecimento de destino</label>
-          <div class="input-row"><input id="vehicleDestination" autocomplete="off" placeholder="Ex.: Fnac — Piso 1" maxlength="120"><button class="icon-btn" id="voiceVehicleDestination" type="button">🎤</button></div>
+          <div class="input-row"><input id="vehicleDestination" autocomplete="off" placeholder="Ex.: Fnac — Piso 1" maxlength="120"><button class="icon-btn" id="voiceVehicleDestination" type="button" aria-label="Ditar destino">Ditar</button></div>
           <div class="chips floor-chips"><button class="chip quick-dest" data-target="vehicleDestination" data-value="Piso 3" type="button">Piso 3</button><button class="chip quick-dest" data-target="vehicleDestination" data-value="Piso 2" type="button">Piso 2</button><button class="chip quick-dest" data-target="vehicleDestination" data-value="Piso 1" type="button">Piso 1</button><button class="chip quick-dest" data-target="vehicleDestination" data-value="Piso 0" type="button">Piso 0</button></div>
           <div id="recentVehicleDestinations" class="chips compact"></div>
           <button id="registerVehicleBtn" class="primary-btn register-btn" type="button"><span>Registar viatura</span><strong id="vehicleButtonDateTime">--/--/---- · --:--</strong></button>
-          <p class="privacy-note">🔒 Entrada e saída ficam guardadas localmente. A saída é capturada no momento em que toca em “Saiu”.</p>
+          <p class="privacy-note">Entrada e saída ficam guardadas localmente. A saída é capturada quando seleciona “Saiu”.</p>
         </section>
 
 
         <section id="personForm" class="card form-card hidden">
-          <div class="card-title center"><span class="kicker">NOVA ENTRADA</span><h2>Registo de pessoas</h2><p>A chegada ao Cais é registada antes da confirmação da Central.</p></div>
+          <div class="card-title center"><span class="kicker">Nova entrada</span><h2>Registo de pessoas</h2><p>A chegada ao cais é registada antes da confirmação da Central.</p></div>
           <label for="personNames">Nome da pessoa / pessoas</label>
-          <div class="input-row"><input id="personNames" autocomplete="off" placeholder="Ex.: Carlos Silva" maxlength="180"><button class="icon-btn" id="voicePersonNames" type="button">🎤</button></div>
+          <div class="input-row"><input id="personNames" autocomplete="off" placeholder="Ex.: Carlos Silva" maxlength="180"><button class="icon-btn" id="voicePersonNames" type="button" aria-label="Ditar nome">Ditar</button></div>
           <div id="personSuggestions" class="suggestions hidden"></div><div id="recentPersons" class="chips compact"></div>
           <label for="personCompany">Empresa que representa</label>
-          <div class="input-row"><input id="personCompany" autocomplete="off" placeholder="Ex.: KONE" maxlength="120"><button class="icon-btn" id="voicePersonCompany" type="button">🎤</button></div>
+          <div class="input-row"><input id="personCompany" autocomplete="off" placeholder="Ex.: KONE" maxlength="120"><button class="icon-btn" id="voicePersonCompany" type="button" aria-label="Ditar empresa">Ditar</button></div>
           <label for="personDestination">Destino / loja / estabelecimento</label>
-          <div class="input-row"><input id="personDestination" autocomplete="off" placeholder="Ex.: Loja X — Piso 2" maxlength="140"><button class="icon-btn" id="voicePersonDestination" type="button">🎤</button></div>
+          <div class="input-row"><input id="personDestination" autocomplete="off" placeholder="Ex.: Loja X — Piso 2" maxlength="140"><button class="icon-btn" id="voicePersonDestination" type="button" aria-label="Ditar destino">Ditar</button></div>
           <div class="chips floor-chips"><button class="chip quick-dest" data-target="personDestination" data-value="Piso 3" type="button">Piso 3</button><button class="chip quick-dest" data-target="personDestination" data-value="Piso 2" type="button">Piso 2</button><button class="chip quick-dest" data-target="personDestination" data-value="Piso 1" type="button">Piso 1</button><button class="chip quick-dest" data-target="personDestination" data-value="Piso 0" type="button">Piso 0</button></div>
           <div id="recentPersonDestinations" class="chips compact"></div>
           <label for="personActivity">Motivo / atividade a realizar</label>
-          <div class="input-row"><input id="personActivity" autocomplete="off" placeholder="Ex.: Reparação de equipamento" maxlength="160"><button class="icon-btn" id="voicePersonActivity" type="button">🎤</button></div>
+          <div class="input-row"><input id="personActivity" autocomplete="off" placeholder="Ex.: Reparação de equipamento" maxlength="160"><button class="icon-btn" id="voicePersonActivity" type="button" aria-label="Ditar atividade">Ditar</button></div>
           <button id="registerPersonBtn" class="primary-btn register-btn" type="button"><span>Registar entrada no Cais</span><strong id="personButtonDateTime">--/--/---- · --:--</strong></button>
           <div class="procedure-note"><strong>Depois do registo:</strong> liga à Central e marca no cartão se foi <b>Autorizado</b> ou <b>Não autorizado</b>. A hora de entrada já fica preservada.</div>
         </section>
 
         <section class="section-head"><div><h2 id="movementsTitle">Movimentos de hoje</h2><p id="todayLabel">—</p></div><input id="searchInput" class="search" placeholder="Pesquisar nome, loja..."></section>
         <div id="recordsList" class="records"></div>
-        <div id="emptyRecords" class="empty-state"><div class="empty-icon">🪪</div><strong id="emptyTitle">Nenhuma entrada registada</strong><p id="emptyText">O primeiro acesso do dia vai aparecer aqui.</p></div>
+        <div id="emptyRecords" class="empty-state"><div class="empty-icon" aria-hidden="true">0</div><strong id="emptyTitle">Nenhuma entrada registada</strong><p id="emptyText">O primeiro acesso do dia vai aparecer aqui.</p></div>
       </section>
 
       <section id="insideTab" class="tab-page">
@@ -123,14 +124,14 @@
     </main>
   </div>
 
-  <div id="guardOverlay" class="overlay hidden"><div class="modal setup-modal"><img src="logo_strong_charon.svg" alt="Strong Charon" class="modal-logo"><div class="card-title center"><span class="kicker">IDENTIFICAÇÃO</span><h2>Identificação do Vigilante</h2><p>O nome e número ficam associados a todos os registos feitos neste dispositivo.</p></div><label for="guardNameInput">Nome do Vigilante</label><input id="guardNameInput" maxlength="80" placeholder="Ex.: João Mendes"><label for="guardNumberInput">Número de Vigilante</label><input id="guardNumberInput" inputmode="numeric" maxlength="12" placeholder="Ex.: 222430"><button id="saveGuardNumber" class="primary-btn small" type="button">Guardar identificação</button><button id="cancelGuardSetup" class="secondary-btn full hidden" type="button">Cancelar</button></div></div>
+  <div id="guardOverlay" class="overlay hidden"><div class="modal setup-modal"><img src="logo_strong_charon.svg" alt="Strong Charon" class="modal-logo"><div class="card-title center"><span class="kicker">Identificação</span><h2>Identificação do vigilante</h2><p>O nome e número ficam associados a todos os registos feitos neste dispositivo.</p></div><label for="guardNameInput">Nome do vigilante</label><input id="guardNameInput" maxlength="80" placeholder="Ex.: João Mendes"><label for="guardNumberInput">Número de vigilante</label><input id="guardNumberInput" inputmode="numeric" maxlength="12" placeholder="Ex.: 222430"><button id="saveGuardNumber" class="primary-btn small" type="button">Guardar identificação</button><button id="cancelGuardSetup" class="secondary-btn full hidden" type="button">Cancelar</button></div></div>
 
-  <div id="editOverlay" class="overlay hidden"><div class="modal"><div class="modal-head"><h2>Corrigir estafeta</h2><button id="closeEdit" class="icon-btn small-icon" type="button">✕</button></div><label>Hora de entrada</label><input id="editEntryTime" type="time"><label>Hora de saída</label><input id="editExitTime" type="time"><label>Nome</label><input id="editName" maxlength="80"><label>Destino</label><input id="editDestination" maxlength="100"><label>Plataforma</label><select id="editPlatform"><option>Glovo</option><option>Uber Eats</option><option>Bolt Food</option><option>Outro</option></select><button id="deleteEdit" class="danger-btn full" type="button">🗑 Excluir registo</button><div class="modal-actions"><button id="cancelEdit" class="secondary-btn full" type="button">Cancelar</button><button id="saveEdit" class="primary-btn small" type="button">Guardar</button></div></div></div>
+  <div id="editOverlay" class="overlay hidden"><div class="modal"><div class="modal-head"><h2>Corrigir estafeta</h2><button id="closeEdit" class="icon-btn small-icon" type="button" aria-label="Fechar">✕</button></div><label>Hora de entrada</label><input id="editEntryTime" type="time"><label>Hora de saída</label><input id="editExitTime" type="time"><label>Nome</label><input id="editName" maxlength="80"><label>Destino</label><input id="editDestination" maxlength="100"><label>Plataforma</label><select id="editPlatform"><option>Glovo</option><option>Uber Eats</option><option>Bolt Food</option><option>Outro</option></select><button id="deleteEdit" class="danger-btn full" type="button">Excluir registo</button><div class="modal-actions"><button id="cancelEdit" class="secondary-btn full" type="button">Cancelar</button><button id="saveEdit" class="primary-btn small" type="button">Guardar</button></div></div></div>
 
-  <div id="vehicleEditOverlay" class="overlay hidden"><div class="modal"><div class="modal-head"><h2>Corrigir viatura</h2><button id="closeVehicleEdit" class="icon-btn small-icon" type="button">✕</button></div><label>Hora de entrada</label><input id="vehicleEditEntryTime" type="time"><label>Hora de saída</label><input id="vehicleEditExitTime" type="time"><label>Matrícula</label><input id="vehicleEditPlate" class="plate-input" maxlength="16"><label>Nome da pessoa / pessoas</label><input id="vehicleEditPersons" maxlength="140"><label>Empresa</label><input id="vehicleEditCompany" maxlength="100"><label>Destino</label><input id="vehicleEditDestination" maxlength="120"><button id="deleteVehicleEdit" class="danger-btn full" type="button">🗑 Excluir registo</button><div class="modal-actions"><button id="cancelVehicleEdit" class="secondary-btn full" type="button">Cancelar</button><button id="saveVehicleEdit" class="primary-btn small" type="button">Guardar</button></div></div></div>
+  <div id="vehicleEditOverlay" class="overlay hidden"><div class="modal"><div class="modal-head"><h2>Corrigir viatura</h2><button id="closeVehicleEdit" class="icon-btn small-icon" type="button" aria-label="Fechar">✕</button></div><label>Hora de entrada</label><input id="vehicleEditEntryTime" type="time"><label>Hora de saída</label><input id="vehicleEditExitTime" type="time"><label>Matrícula</label><input id="vehicleEditPlate" class="plate-input" maxlength="16"><label>Nome da pessoa / pessoas</label><input id="vehicleEditPersons" maxlength="140"><label>Empresa</label><input id="vehicleEditCompany" maxlength="100"><label>Destino</label><input id="vehicleEditDestination" maxlength="120"><button id="deleteVehicleEdit" class="danger-btn full" type="button">Excluir registo</button><div class="modal-actions"><button id="cancelVehicleEdit" class="secondary-btn full" type="button">Cancelar</button><button id="saveVehicleEdit" class="primary-btn small" type="button">Guardar</button></div></div></div>
 
 
-  <div id="personEditOverlay" class="overlay hidden"><div class="modal"><div class="modal-head"><h2>Corrigir registo de pessoa</h2><button id="closePersonEdit" class="icon-btn small-icon" type="button">✕</button></div><label>Hora de entrada</label><input id="personEditEntryTime" type="time"><label>Hora de saída</label><input id="personEditExitTime" type="time"><label>Nome da pessoa / pessoas</label><input id="personEditNames" maxlength="180"><label>Empresa</label><input id="personEditCompany" maxlength="120"><label>Destino / loja</label><input id="personEditDestination" maxlength="140"><label>Motivo / atividade</label><input id="personEditActivity" maxlength="160"><label>Autorização da Central</label><select id="personEditAuthorization"><option value="pending">Aguarda autorização</option><option value="authorized">Autorizado</option><option value="denied">Não autorizado</option></select><button id="deletePersonEdit" class="danger-btn full" type="button">🗑 Excluir registo</button><div class="modal-actions"><button id="cancelPersonEdit" class="secondary-btn full" type="button">Cancelar</button><button id="savePersonEdit" class="primary-btn small" type="button">Guardar</button></div></div></div>
+  <div id="personEditOverlay" class="overlay hidden"><div class="modal"><div class="modal-head"><h2>Corrigir registo de pessoa</h2><button id="closePersonEdit" class="icon-btn small-icon" type="button" aria-label="Fechar">✕</button></div><label>Hora de entrada</label><input id="personEditEntryTime" type="time"><label>Hora de saída</label><input id="personEditExitTime" type="time"><label>Nome da pessoa / pessoas</label><input id="personEditNames" maxlength="180"><label>Empresa</label><input id="personEditCompany" maxlength="120"><label>Destino / loja</label><input id="personEditDestination" maxlength="140"><label>Motivo / atividade</label><input id="personEditActivity" maxlength="160"><label>Autorização da Central</label><select id="personEditAuthorization"><option value="pending">Aguarda autorização</option><option value="authorized">Autorizado</option><option value="denied">Não autorizado</option></select><button id="deletePersonEdit" class="danger-btn full" type="button">Excluir registo</button><div class="modal-actions"><button id="cancelPersonEdit" class="secondary-btn full" type="button">Cancelar</button><button id="savePersonEdit" class="primary-btn small" type="button">Guardar</button></div></div></div>
 
   <div id="toast" class="toast" aria-live="polite"></div>
   <script src="desktop_bridge.js"></script>
