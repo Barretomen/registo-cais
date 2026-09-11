@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 438 150" role="img" aria-labelledby="title desc" preserveAspectRatio="xMidYMid meet">
+  <title id="title">Strong Charon</title>
+  <desc id="desc">Marca Strong Charon em azul e vermelho.</desc>
+  <g transform="translate(7 11)">
+    <circle cx="58" cy="63" r="43" fill="none" stroke="#D10A22" stroke-width="10"/>
+    <circle cx="58" cy="63" r="18" fill="#0B1D32"/>
+    <path d="M20 63a38 38 0 0 1 25-35" fill="none" stroke="#0053C7" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  <g font-family="Arial Black, Arial, Helvetica, sans-serif" font-weight="900" letter-spacing="1">
+    <text x="119" y="70" font-size="56" fill="#0053C7">STR</text>
+    <circle cx="248" cy="51" r="19" fill="#D10A22"/>
+    <circle cx="248" cy="51" r="8" fill="#FFFFFF"/>
+    <text x="273" y="70" font-size="56" fill="#0053C7">NG</text>
+    <text x="119" y="128" font-size="56" fill="#0B1D32">CHARON</text>
+  </g>
+</svg>

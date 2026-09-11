@@ -1,0 +1,92 @@
+/* v3.1 — acabamento visual e alinhamento */
+.brand-header{display:flex;flex-direction:column;align-items:center;text-align:center}
+.brand-logo{display:block;width:min(255px,74vw);height:auto;max-height:86px;object-fit:contain;object-position:center;margin:2px auto 10px;filter:none!important}
+.report-identity img,.modal-logo{object-fit:contain;object-position:center;filter:none!important}
+.header-badges{width:100%;justify-content:center;align-items:center}
+.platform .brand-icon{width:72px;height:40px;padding:3px;background:#fff;overflow:hidden}
+.platform .brand-icon img{width:100%;height:100%;object-fit:contain}
+.state-banner.inside{background:#ffe5e7!important;color:#a91922!important;border-color:#efafb4!important}
+.state-banner.left{background:#dff6ea!important;color:#0e7b4d!important;border-color:#aee0c8!important}
+.exit-btn{background:#e6f8ee!important;border-color:#9fdabf!important;color:#0b7b4a!important}
+.exit-btn::before{content:'✓ ';font-weight:950}
+.record-actions{align-items:stretch}
+.mini-btn{white-space:nowrap}
+.guard-mini{line-height:1.35}
+html[data-theme="dark"] .brand-logo,html[data-theme="dark"] .report-identity img,html[data-theme="dark"] .modal-logo{filter:brightness(1.45) saturate(1.08)!important}
+html[data-theme="dark"] .state-banner.inside{background:#4a171b!important;color:#ff9ba0!important;border-color:#7f383d!important}
+html[data-theme="dark"] .state-banner.left{background:#113c2e!important;color:#70e4b1!important;border-color:#2b6e52!important}
+html[data-theme="dark"] .exit-btn{background:#113c2e!important;border-color:#2b6e52!important;color:#70e4b1!important}
+@media(max-width:520px){
+  .brand-logo{width:min(235px,78vw);max-height:80px}
+  .record-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .record-actions .mini-btn{font-size:11px;padding:0 5px}
+  .platform .brand-icon{width:66px;height:38px}
+}
+
+/* Logos de plataforma sem texto duplicado */
+.platform:not([data-platform="Outro"]) .brand-icon{width:min(122px,78%);height:42px;border:0;background:#fff;padding:2px}
+.platform:not([data-platform="Outro"]) b{display:none}
+.platform[data-platform="Outro"]{gap:10px}
+@media(max-width:520px){.platform:not([data-platform="Outro"]) .brand-icon{width:min(112px,86%);height:40px}}
+
+/* v5 — exclusão de registo no modal de edição */
+.danger-btn{width:100%;min-height:48px;margin-top:18px;border-radius:15px;border:1px solid #e1a7ac;background:#fff1f2;color:#a91922;font-weight:900}
+.danger-btn:active{transform:translateY(1px)}
+html[data-theme="dark"] .danger-btn{background:#3f171b;border-color:#763139;color:#ff9ba0}
+
+/* v6 — módulo de Viaturas no mesmo app */
+.module-switcher{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 11px;padding:5px;background:rgba(255,255,255,.78);border:1px solid var(--border);border-radius:19px;box-shadow:0 8px 24px rgba(8,27,48,.07)}
+.module-btn{min-height:55px;border:1px solid transparent;border-radius:15px;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:9px;font-weight:900;font-size:15px}
+.module-btn span{font-size:20px}.module-btn.active{background:var(--uniform);border-color:#a9c5e4;color:#071b31;box-shadow:0 4px 13px rgba(8,27,48,.10)}
+.plate-input,.plate-display{text-transform:uppercase;letter-spacing:.09em;font-weight:950}.plate-chip{letter-spacing:.05em}.vehicle-persons{margin-top:8px;color:var(--text);font-size:13px;font-weight:760}
+html[data-theme="dark"] .module-switcher{background:#101b29;border-color:var(--border)}html[data-theme="dark"] .module-btn{color:var(--muted)}html[data-theme="dark"] .module-btn.active{background:#c9d9ed;color:#071729;border-color:#c9d9ed}
+@media(max-width:520px){.module-switcher{position:relative;margin-top:0}.module-btn{min-height:50px;font-size:14px}.module-btn span{font-size:18px}}
+
+
+/* v7 — módulo Pessoas e autorização da Central */
+.procedure-note{margin-top:13px;padding:12px 13px;border-radius:14px;background:#fff8e8;border:1px solid #efd395;color:#59431a;font-size:12px;line-height:1.45;text-align:center}
+.auth-banner{display:inline-flex;align-items:center;font-size:9px;font-weight:950;letter-spacing:.05em;padding:6px 8px;border-radius:999px;border:1px solid transparent;white-space:nowrap}
+.auth-banner.pending{background:#fff0d7;color:#9a5b00;border-color:#f0ca88}
+.auth-banner.authorized{background:#e5f1ff;color:#0d5eae;border-color:#afd0f2}
+.auth-banner.denied{background:#ffe5e7;color:#a91922;border-color:#efafb4}
+.auth-btn{border-width:1px}
+.auth-btn.authorize{background:#e8f3ff;border-color:#acd0f4;color:#0c5ca9}
+.auth-btn.deny{background:#fff0f1;border-color:#e8b0b5;color:#a91922}
+.auth-btn.change-auth{background:#e8f3ff;border-color:#acd0f4;color:#0c5ca9}
+.person-company{margin-top:5px;color:var(--blue);font-size:11px;font-weight:900;text-transform:uppercase}
+.person-activity{margin-top:6px;padding:9px 10px;border-radius:12px;background:#f5f9fd;border:1px solid #d6e2ee;color:var(--text);font-size:12px;line-height:1.35}
+.person-auth-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+html[data-theme="dark"] .procedure-note{background:#342817;border-color:#66502c;color:#f3dca8}
+html[data-theme="dark"] .auth-banner.pending{background:#4a3515;color:#ffd18a;border-color:#785b2d}
+html[data-theme="dark"] .auth-banner.authorized{background:#143553;color:#8ec7ff;border-color:#2f648f}
+html[data-theme="dark"] .auth-banner.denied{background:#4a171b;color:#ff9ba0;border-color:#7f383d}
+html[data-theme="dark"] .auth-btn.authorize,html[data-theme="dark"] .auth-btn.change-auth{background:#143553;border-color:#2f648f;color:#8ec7ff}
+html[data-theme="dark"] .auth-btn.deny{background:#42181c;border-color:#733039;color:#ff999f}
+html[data-theme="dark"] .person-activity{background:#0c1724;border-color:#293e54}
+@media(max-width:520px){.module-btn{gap:5px;font-size:12px;padding:0 5px}.module-btn span{font-size:16px}.record-actions{grid-template-columns:repeat(2,minmax(0,1fr))}.record-actions .mini-btn{min-height:42px}}
+
+
+/* Versão PC / GitHub Pages — mais espaço em monitores sem alterar o layout móvel */
+@media (min-width: 980px){
+  body{padding-bottom:36px}
+  .app-shell{max-width:1180px;padding:22px 28px 42px}
+  .brand-header{padding-top:20px}
+  .brand-logo{width:290px;max-height:96px}
+  .module-switcher,.tabs,.day-summary{max-width:820px;margin-left:auto;margin-right:auto}
+  .form-card{max-width:820px;margin-left:auto;margin-right:auto;padding:26px 30px}
+  .records{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  #insideList.records{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .record{padding:18px}
+  .section-head{margin-top:30px}
+  .report-controls{display:grid;grid-template-columns:minmax(360px,520px) 220px;gap:12px;align-items:center}
+  .report-controls .date-nav{margin-bottom:0}
+  .report-identity{padding:20px}
+  .report-identity img{width:170px;max-height:70px}
+  .summary-grid{gap:12px}
+  .summary-card{padding:16px 8px}
+  .summary-card span{font-size:28px}
+  .table-wrap table{min-width:900px}
+  .report-actions{grid-template-columns:repeat(3,1fr)}
+  .report-actions #shareBtn{grid-column:auto}
+  .modal{max-width:650px}
+}

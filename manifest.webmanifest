@@ -1,0 +1,14 @@
+{
+  "name": "Registo Cais — Controlo de Acessos",
+  "short_name": "Registo Cais",
+  "description": "Registo local de Estafetas, Viaturas e Pessoas no Cais.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eaf2fb",
+  "theme_color": "#c9d9ed",
+  "lang": "pt-PT",
+  "icons": [
+    {"src":"logo_strong_charon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}
+  ]
+}
