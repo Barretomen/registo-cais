@@ -43,6 +43,33 @@
 
     <main>
       <section id="registerTab" class="tab-page active">
+        <section id="centralMonitor" class="central-monitor hidden" aria-labelledby="monitorTitle">
+          <header class="monitor-heading">
+            <div>
+              <span class="monitor-live"><i aria-hidden="true"></i> Atualização em tempo real</span>
+              <h2 id="monitorTitle">Movimentos do cais</h2>
+              <p>Entradas, saídas e autorizações numa única linha cronológica.</p>
+            </div>
+            <time id="monitorUpdated">A aguardar dados</time>
+          </header>
+          <div class="monitor-summary" aria-label="Resumo de movimentos">
+            <div><strong id="monitorTodayCount">0</strong><span>entradas hoje</span></div>
+            <div><strong id="monitorInsideCount">0</strong><span>dentro agora</span></div>
+            <div><strong id="monitorPendingCount">0</strong><span>por decidir</span></div>
+          </div>
+          <div class="monitor-toolbar" role="search" aria-label="Filtrar movimentos">
+            <label class="monitor-search"><span>Pesquisar</span><input id="monitorSearch" type="search" autocomplete="off" placeholder="Nome, matrícula, empresa ou destino"></label>
+            <label><span>Período</span><select id="monitorRange"><option value="today">Hoje</option><option value="inside">Presentes agora</option><option value="7d">Últimos 7 dias</option><option value="all">Todo o histórico</option></select></label>
+            <label><span>Tipo</span><select id="monitorKind"><option value="all">Todos</option><option value="estafetas">Estafetas</option><option value="viaturas">Viaturas</option><option value="pessoas">Pessoas</option></select></label>
+            <label><span>Estado</span><select id="monitorState"><option value="all">Todos</option><option value="inside">Dentro</option><option value="left">Saíram</option><option value="pending">Por autorizar</option><option value="authorized">Autorizados</option><option value="denied">Não autorizados</option></select></label>
+          </div>
+          <div class="monitor-table" role="table" aria-label="Movimentos filtrados">
+            <div class="monitor-columns" role="row"><span>Quando / tipo</span><span>Identificação</span><span>Contexto</span><span>Destino</span><span>Estado</span><span>Ações</span></div>
+            <div id="monitorFeed" class="monitor-feed" role="rowgroup"></div>
+          </div>
+          <div id="monitorEmpty" class="monitor-empty hidden"><strong>Nenhum movimento encontrado</strong><span>Altere os filtros ou aguarde um novo registo.</span></div>
+        </section>
+
         <div class="day-summary">
           <div><span id="todayCount">0</span><small id="todayCountLabel">entradas hoje</small></div>
           <div><span id="insideCount">0</span><small>dentro agora</small></div>

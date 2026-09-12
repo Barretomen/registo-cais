@@ -73,7 +73,7 @@
     document.querySelectorAll('.module-btn').forEach(b=>b.classList.toggle('active',b.dataset.module===state.module));
     const monitorOnly=state.cloudEnabled&&state.userRole==='centralist';$('courierForm').classList.toggle('hidden',state.module!=='estafetas'||monitorOnly);$('vehicleForm').classList.toggle('hidden',state.module!=='viaturas'||monitorOnly);$('personForm').classList.toggle('hidden',state.module!=='pessoas'||monitorOnly);
     const registerTabButton=document.querySelector('.tab[data-tab="register"]');if(registerTabButton)registerTabButton.childNodes[0].textContent=monitorOnly?'Monitor ':'Registar ';
-    const i=moduleInfo();$('moduleTitle').textContent=i.title;$('todayCountLabel').textContent=i.count;$('movementsTitle').textContent=i.movements;$('insideTitle').textContent=i.inside;$('insideHelp').textContent=i.insideHelp;$('searchInput').placeholder=i.search;$('emptyTitle').textContent=i.empty;$('emptyText').textContent=i.emptyText;$('reportKind').textContent=i.report;
+    const i=moduleInfo();$('moduleTitle').textContent=monitorOnly?'Monitor da Central':i.title;$('centralMonitor').classList.toggle('hidden',!monitorOnly);$('todayCountLabel').textContent=i.count;$('movementsTitle').textContent=i.movements;$('insideTitle').textContent=i.inside;$('insideHelp').textContent=i.insideHelp;$('searchInput').placeholder=i.search;$('emptyTitle').textContent=i.empty;$('emptyText').textContent=i.emptyText;$('reportKind').textContent=i.report;
     selectTab('register');renderAll();
   }
 
